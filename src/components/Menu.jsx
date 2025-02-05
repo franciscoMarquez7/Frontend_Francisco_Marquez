@@ -25,12 +25,10 @@ function Menu() {
         {/* Logo */}
         <MDBNavbarBrand>
           <img src={logo} height="30" alt="logo" loading="lazy" />
+          <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+            <h2>InfoTurismo</h2>
+          </Link>
         </MDBNavbarBrand>
-
-        {/* Logo como Link */}
-        <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-          <h2>InfoTurismo</h2>
-        </Link>
 
         <MDBNavbarToggler
           aria-controls="navbarSupportedContent"
