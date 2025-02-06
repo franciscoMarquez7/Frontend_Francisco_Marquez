@@ -25,7 +25,7 @@ function ListadoMonumentos() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // Para aceptar cookies en la respuesta y enviarlas si las hay
+        //credentials: "include", // Para aceptar cookies en la respuesta y enviarlas si las hay
       });
 
       if (response.ok) {
@@ -37,15 +37,15 @@ function ListadoMonumentos() {
     getMonumentos();
   }, []); // Se ejecuta solo en el primer renderizado
 
-  const handleDelete = async (idmonumento) => {
-    let response = await fetch(apiUrl + "/monumentos/" + idmonumento, {
+  const handleDelete = async (id) => {
+    let response = await fetch(apiUrl + "/monumentos/" + id, {
       method: "DELETE",
     });
 
     if (response.ok) {
       // Utilizando filter creo un array sin el plato borrado
       const monumentosTrasBorrado = rows.filter(
-        (monumento) => monumento.idmonumento != idmonumento
+        (monumento) => monumento.id != id
       );
       // Establece los datos de nuevo para provocar un renderizado
       setRows(monumentosTrasBorrado);
@@ -64,8 +64,8 @@ function ListadoMonumentos() {
             <TableHead>
               <TableRow>
                 <TableCell align="right">IDMONUMENTO</TableCell>
-                <TableCell>NOMBRE</TableCell>
-                <TableCell>IDCIUDAD</TableCell>
+                <TableCell align="right">NOMBRE</TableCell>
+                <TableCell align="right">IDCIUDAD</TableCell>
                 <TableCell align="right">AÑOCONSTRUCCION</TableCell>
                 <TableCell align="center">ELIMINAR</TableCell>
                 <TableCell align="center">EDITAR</TableCell>
@@ -74,30 +74,26 @@ function ListadoMonumentos() {
             <TableBody>
               {rows.map((row) => (
                 <TableRow
-                  key={row.idmonumento}
+                  key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell align="right">{row.idplato}</TableCell>
-                  <TableCell>{row.nombre}</TableCell>
-                  <TableCell>{row.ciudad_id}</TableCell>
-                  <TableCell align="right">
-                    {row.añoConstruccion + " €"}
-                  </TableCell>
-                  <TableCell>
+                  <TableCell align="right">{row.id}</TableCell>
+                  <TableCell align="right">{row.nombre}</TableCell>
+                  <TableCell align="right">{row.ciudad_id}</TableCell>
+                  <TableCell align="right">{row.añoConstruccion}</TableCell>
+                  <TableCell align="center">
                     <Button
                       variant="contained"
-                      onClick={() => handleDelete(row.idmonumento)}
+                      onClick={() => handleDelete(row.id)}
                       color="error"
                     >
                       <DeleteForeverIcon fontSize="small" />
                     </Button>
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center">
                     <Button
                       variant="contained"
-                      onClick={() =>
-                        navigate("/modificarmonumento/" + row.idmonumento)
-                      }
+                      onClick={() => navigate("/modificarmonumento/" + row.id)}
                     >
                       <EditNoteIcon fontSize="small" />
                     </Button>

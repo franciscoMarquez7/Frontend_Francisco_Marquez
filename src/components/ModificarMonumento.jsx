@@ -7,7 +7,7 @@ import { apiUrl } from "../config";
 function ModificarMonumento() {
   const params = useParams();
   const [datos, setDatos] = useState({
-    idmonumento: params.idmonumento, // Cambié de idplato a idmonumento
+    id: params.idmonumento,
     nombre: "",
     ciudad_id: "",
     añoConstruccion: "",
@@ -22,7 +22,7 @@ function ModificarMonumento() {
 
   useEffect(() => {
     async function getMonumentoById() {
-      let response = await fetch(apiUrl + "/monumentos/" + datos.idmonumento);
+      let response = await fetch(apiUrl + "/monumentos/" + datos.id);
       if (response.ok) {
         let data = await response.json();
         setDatos(data.datos);
@@ -44,16 +44,13 @@ function ModificarMonumento() {
       // Enviamos los datos mediante fetch
       try {
         console.log("Vamos a hacer fetch");
-        const response = await fetch(
-          apiUrl + "/monumentos/" + datos.idmonumento,
-          {
-            method: "PUT", // "PATCH"
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(datos), // JSON.stringify({blocked: true})
-          }
-        );
+        const response = await fetch(apiUrl + "/monumentos/" + datos.id, {
+          method: "PUT", // "PATCH"
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(datos), // JSON.stringify({blocked: true})
+        });
 
         if (response.ok) {
           // 204 No content
@@ -142,7 +139,7 @@ function ModificarMonumento() {
             />
             <TextField
               id="outlined-basic"
-              label="ID Ciudad"
+              label="IDCiudad"
               variant="outlined"
               name="ciudad_id"
               value={datos.ciudad_id}
